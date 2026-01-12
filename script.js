@@ -7,6 +7,7 @@ const wind = document.getElementById("wind");
 const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
 const weatherIcon = document.getElementById("weatherIcon");
+const alertBox = document.getElementById("alert");
 
 async function getWeatherData(cityName) {
   const currentUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}`;
@@ -19,7 +20,7 @@ async function getWeatherData(cityName) {
       fetch(forecastUrl).then((res) => res.json()),
       fetch(alertUrl).then((res) => res.json()),
     ]);
-    console.log(forecast);
+    console.log(alerts);
 
     return { current, forecast, alerts };
   } catch (error) {
@@ -46,6 +47,16 @@ function processForecastData(data) {
   }));
 }
 
+function processAlertData(data) {
+  if (data.alerts && data.alerts.alert && Array.isArray(data.alerts.alert)) {
+    return data.alerts.alert.map((alert) => ({
+      headline: alert.headline,
+      severity: alert.severity,
+    }));
+  }
+  return [];
+}
+
 function updateCurrentWeatherUI(currentData) {
   city.innerText = currentData.city;
   temp.innerText = currentData.temp;
@@ -65,6 +76,15 @@ function updateForecastUI(forecastData) {
   // thirdDay.innerHTML = `Three days from now: ${forecastData[2].date} - Max: ${forecastData[2].maxTemp}`;
 }
 
+function updateAlertUI(alertData) {
+  if (alertBox) {
+    if (alertData.length > 0) {
+      alertBox.innerText = `Alert: ${alertData[0].headline} - ${alertData[0].severity}`;
+    } else {
+      alertBox.innerText = "No weather alerts.";
+    }
+  }
+}
 async function displayWeather(cityName) {
   try {
     const weatherData = await getWeatherData(cityName);
@@ -72,6 +92,8 @@ async function displayWeather(cityName) {
     updateCurrentWeatherUI(processedData);
     const processedForecast = processForecastData(weatherData.forecast);
     updateForecastUI(processedForecast);
+    const processedAlerts = processAlertData(weatherData.alerts);
+    updateAlertUI(processedAlerts);
   } catch (error) {
     console.error("Error displaying weather data:", error);
   }

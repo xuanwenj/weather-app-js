@@ -97,3 +97,13 @@ body{
     margin-top: -6px;
 }
 
+.alert {
+    background-color: #ffcc00;
+    color: #b73e3e;
+    padding: 15px 20px;
+    border-radius: 0;
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
