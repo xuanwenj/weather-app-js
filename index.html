@@ -1,42 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="card">
-
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
         <div class="search">
-            <input type="text" id="searchBox" placeholder="Enter city name" spellcheck="false">
-            <button id="searchBtn"><img src="/images/search.png" alt="Search"></button>
+          <input
+            type="text"
+            id="searchBox"
+            placeholder="Enter city name"
+            spellcheck="false"
+          />
+          <button id="searchBtn">
+            <img src="/images/search.png" alt="Search" />
+          </button>
         </div>
         <div class="weather">
-            <img src="images/rain.png" class="weather-icon" id="weatherIcon" alt="rain">
-            <h1 class="temp" id="temp">22°C</h1>
-            <h2 class="city" id="city">Wellington</h2>
-            <div class="details">
-                <div class="col">
-                    <img src="images/humidity.png">
-                    <div>
-                        <p class="humidity" id="humidity">78%</p>
-                        <p>Humidity</p>
-                    </div>
-                </div>
-                 <div class="col">
-                    <img src="images/wind.png">
-                    <div>
-                        <p class="wind" id="wind">12 km/h</p>
-                        <p>Wind</p>
-                    </div>
-                </div>
+          <img
+            src="images/rain.png"
+            class="weather-icon"
+            id="weatherIcon"
+            alt="rain"
+          />
+          <h1 class="temp" id="temp">22°C</h1>
+          <h2 class="city" id="city">Wellington</h2>
+          <div class="details">
+            <div class="col">
+              <img src="images/humidity.png" />
+              <div>
+                <p class="humidity" id="humidity">78%</p>
+                <p>Humidity</p>
+              </div>
             </div>
-
+            <div class="col">
+              <img src="images/wind.png" />
+              <div>
+                <p class="wind" id="wind">12 km/h</p>
+                <p>Wind</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div class="card">
+        <div class="forecast">
+          <p id="firstday">tommorow</p>
+          <p id="secondday">day after tommorow <span class="forecast-temp">13</span></p>
+          <p id="thirdday">three days from now <span class="forecast-temp">14</span></p>
+          <div class="details">
+            <div class="col">
+              <img src="images/humidity.png" />
+              <div>
+                <p class="humidity" id="humidity">78%</p>
+                <p>Humidity</p>
+              </div>
+            </div>
+            <div class="col">
+              <img src="images/wind.png" />
+              <div>
+                <p class="wind" id="wind">12 km/h</p>
+                <p>Wind</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
