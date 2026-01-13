@@ -8,6 +8,7 @@ const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
 const weatherIcon = document.getElementById("weatherIcon");
 const alertBox = document.getElementById("alert");
+const alertText = document.getElementById("alertText");
 
 async function getWeatherData(cityName) {
   const currentUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}`;
@@ -20,6 +21,7 @@ async function getWeatherData(cityName) {
       fetch(forecastUrl).then((res) => res.json()),
       fetch(alertUrl).then((res) => res.json()),
     ]);
+    console.log(forecast);
     console.log(alerts);
 
     return { current, forecast, alerts };
@@ -34,7 +36,7 @@ function processCurrentData(data) {
     city: data.location.name || "Unknown Location",
     temp: data.current.temp_c + "°C",
     humidity: data.current.humidity + "%",
-    wind: data.current.wind_kph + " km/h",
+    wind: data.current.wind_kph + "km/h",
     weatherIcon: data.current.condition.icon,
   };
 }
@@ -73,15 +75,14 @@ function updateForecastUI(forecastData) {
   firstDay.innerHTML = `${forecastData[0].date}: ${forecastData[0].maxTemp} / ${forecastData[0].minTemp}`;
   secondDay.innerHTML = `${forecastData[1].date}: ${forecastData[1].maxTemp} / ${forecastData[1].minTemp}`;
   thirdDay.innerHTML = `${forecastData[2].date}: ${forecastData[2].maxTemp} / ${forecastData[2].minTemp}`;
-  // thirdDay.innerHTML = `Three days from now: ${forecastData[2].date} - Max: ${forecastData[2].maxTemp}`;
 }
 
 function updateAlertUI(alertData) {
-  if (alertBox) {
+  if (alertText) {
     if (alertData.length > 0) {
-      alertBox.innerText = `Alert: ${alertData[0].headline} - ${alertData[0].severity}`;
+      alertText.innerText = `Alert: ${alertData[0].headline} - ${alertData[0].severity}`;
     } else {
-      alertBox.innerText = "No weather alerts.";
+      alertText.innerText = "No weather alerts.";
     }
   }
 }
@@ -101,4 +102,8 @@ async function displayWeather(cityName) {
 
 searchBtn.addEventListener("click", () => {
   displayWeather(searchBox.value);
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  displayWeather("auto:ip");
 });

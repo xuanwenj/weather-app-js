@@ -106,4 +106,20 @@ body{
     font-weight: bold;
     text-align: center;
     width: 100%;
+    overflow: hidden;  
+}
+
+.alert_text {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scroll-left 20s linear infinite;
+}
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100vw);
+  }
 }
