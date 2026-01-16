@@ -6,6 +6,8 @@ const wind = document.getElementById("wind");
 const weatherIcon = document.getElementById("weatherIcon");
 const alertText = document.getElementById("alertText");
 
+const aiResponse = document.getElementById("aiForecast");
+
 function updateCurrentWeatherUI(currentData) {
   city.innerText = currentData.city;
   temp.innerText = currentData.temp;
@@ -33,4 +35,15 @@ function updateAlertUI(alertData) {
     }
   }
 }
-export { updateCurrentWeatherUI, updateForecastUI, updateAlertUI };
+
+function updateAIResponseUI(responseText) {
+  if (aiResponse) {
+    aiResponse.innerText = responseText;
+  }
+}
+export {
+  updateCurrentWeatherUI,
+  updateForecastUI,
+  updateAlertUI,
+  updateAIResponseUI,
+};

@@ -11,8 +11,6 @@ async function getWeatherData(cityName) {
       fetch(forecastUrl).then((res) => res.json()),
       fetch(alertUrl).then((res) => res.json()),
     ]);
-    console.log(forecast);
-    console.log(alerts);
 
     return {
       current: processCurrentData(current),
@@ -24,7 +22,6 @@ async function getWeatherData(cityName) {
     throw error;
   }
 }
-
 function processCurrentData(data) {
   return {
     city: data.location.name || "Unknown Location",
