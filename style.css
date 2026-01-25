@@ -131,3 +131,7 @@ body{
     transform: translateX(-100vw);
   }
 }
+
+#aiForecast {
+  text-align: justify;
+}

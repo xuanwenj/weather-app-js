@@ -11,7 +11,6 @@ app.use(express.json());
 
 const anthropic = new Anthropic();
 
-// 穿衣建议 API
 app.post("/api/dress-suggestion", async (req, res) => {
   try {
     const { weatherData } = req.body;
@@ -19,12 +18,21 @@ app.post("/api/dress-suggestion", async (req, res) => {
     const msg = await anthropic.messages.create({
       model: "claude-sonnet-4-5",
       max_tokens: 1024,
-      system:
-        "You are a helpful assistant that provide dress suggestions based on the weather.",
+      system: `
+You are a helpful assistant that gives clothing suggestions based on weather.
+
+Formatting rules:
+- You may describe clothing layers or categories if helpful.
+- You must express all layers only within normal continuous sentences.
+- Do not place layer names or categories on separate lines.
+- Do not use headings, lists, bullet points, dashes, asterisks, or any markdown.
+- Write the entire answer as natural paragraphs only.
+`,
       messages: [
         {
           role: "user",
-          content: `Please make a dress suggestion based on the provided weather data below: 
+          content: `Please make a dress suggestion based on the provided weather data below.
+                    Please do not repeat the weather data in your response.
 temperature: ${weatherData.current.temp}, 
 humidity: ${weatherData.current.humidity},
 wind: ${weatherData.current.wind}.`,

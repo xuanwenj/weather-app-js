@@ -1,4 +1,3 @@
-// 调用后端 API 获取穿衣建议
 async function getDressSuggestion(weatherData) {
   const response = await fetch("http://localhost:3001/api/dress-suggestion", {
     method: "POST",
