@@ -9,8 +9,8 @@ import { getDressSuggestion } from "./claudeService.js";
 const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
 
-async function handleSearch() {
-  const cityName = searchBox.value;
+async function handleSearch(city) {
+  const cityName = city || searchBox.value;
   if (!cityName) return;
   try {
     const weatherData = await getWeatherData(cityName);

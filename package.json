@@ -5,9 +5,8 @@
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "server": "node server.js",
-    "start": "concurrently \"npm run server\" \"npm run dev\""
+    "dev": "concurrently \"node server.js\" \"vite\"",
+    "server": "node server.js"
   },
   "repository": {
     "type": "git",
