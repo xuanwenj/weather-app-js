@@ -31,7 +31,7 @@ function displayWeather(weatherData) {
 function displayAISuggestion(suggestion) {
   updateAIResponseUI(suggestion);
 }
-searchBtn.addEventListener("click", handleSearch);
+searchBtn.addEventListener("click", () => handleSearch());
 
 window.addEventListener("DOMContentLoaded", () => {
   handleSearch("auto:ip");
