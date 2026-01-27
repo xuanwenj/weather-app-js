@@ -1,3 +1,5 @@
+import Chart from "chart.js/auto";
+
 const city = document.getElementById("city");
 const temp = document.getElementById("temp");
 const humidity = document.getElementById("humidity");
@@ -41,9 +43,58 @@ function updateAIResponseUI(responseText) {
     aiResponse.innerText = responseText;
   }
 }
+
+function updateLineGraphUI(forecastData) {
+  new Chart(document.getElementById("linegraph"), {
+    type: "line",
+    options: {
+      animation: false,
+      scales: {
+        y: {
+          ticks: {
+            color: "#ffffff",
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.2)",
+          },
+        },
+        x: {
+          ticks: {
+            color: "#ffffff",
+          },
+          grid: {
+            color: "rgba(255, 255, 255, 0.1)",
+          },
+        },
+      },
+      plugins: {
+        legend: {
+          display: false,
+        },
+        tooltip: {
+          enabled: false,
+        },
+      },
+    },
+    data: {
+      labels: forecastData[0].hourlyTemp.map((temp) => temp.time),
+      datasets: [
+        {
+          label: "Line Graph Data",
+          data: forecastData[0].hourlyTemp.map((temp) => temp.temp),
+          backgroundColor: "rgba(0, 254, 186, 0.2)",
+          borderColor: "rgba(0, 254, 186, 0.2)",
+          pointBackgroundColor: "rgba(0, 254, 186, 1)",
+        },
+      ],
+    },
+  });
+}
+
 export {
   updateCurrentWeatherUI,
   updateForecastUI,
   updateAlertUI,
   updateAIResponseUI,
+  updateLineGraphUI,
 };

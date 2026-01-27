@@ -23,6 +23,7 @@ async function getWeatherData(cityName) {
   }
 }
 function processCurrentData(data) {
+  console.log(data);
   return {
     city: data.location.name || "Unknown Location",
     temp: data.current.temp_c + "°C",
@@ -37,6 +38,7 @@ function processForecastData(data) {
     date: day.date,
     maxTemp: day.day.maxtemp_c + "°C",
     minTemp: day.day.mintemp_c + "°C",
+    hourlyTemp: day.hour.map((h) => ({ time: h.time, temp: h.temp_c })),
   }));
 }
 

@@ -4,6 +4,7 @@ import {
   updateForecastUI,
   updateAlertUI,
   updateAIResponseUI,
+  updateLineGraphUI,
 } from "./weatherUI.js";
 import { getDressSuggestion } from "./claudeService.js";
 const searchBox = document.getElementById("searchBox");
@@ -15,24 +16,26 @@ async function handleSearch(city) {
   try {
     const weatherData = await getWeatherData(cityName);
     displayWeather(weatherData);
-    const dressSuggestion = await getDressSuggestion(weatherData);
-    displayAISuggestion(dressSuggestion);
-    console.log("Dress Suggestion:", dressSuggestion);
+    //const dressSuggestion = await getDressSuggestion(weatherData);
+    //displayAISuggestion(dressSuggestion);
+    //console.log("Dress Suggestion:", dressSuggestion);
   } catch (error) {
     console.error("Error fetching weather data:", error);
   }
 }
 
 function displayWeather(weatherData) {
+  console.log("Forecast structure:", weatherData.forecast);
   updateCurrentWeatherUI(weatherData.current);
   updateForecastUI(weatherData.forecast);
   updateAlertUI(weatherData.alerts);
+  updateLineGraphUI(weatherData.forecast);
 }
 function displayAISuggestion(suggestion) {
   updateAIResponseUI(suggestion);
 }
 searchBtn.addEventListener("click", () => handleSearch());
 
-window.addEventListener("DOMContentLoaded", () => {
-  handleSearch("auto:ip");
-});
+// window.addEventListener("DOMContentLoaded", () => {
+//   handleSearch("auto:ip");
+// });
