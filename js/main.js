@@ -5,37 +5,62 @@ import {
   updateAlertUI,
   updateAIResponseUI,
   updateLineGraphUI,
+  showLoadingAI,
+  hideLoadingAI,
+  showErrorMessage,
 } from "./weatherUI.js";
 import { getDressSuggestion } from "./claudeService.js";
+
 const searchBox = document.getElementById("searchBox");
 const searchBtn = document.getElementById("searchBtn");
 
-async function handleSearch(city) {
-  const cityName = city || searchBox.value;
-  if (!cityName) return;
+searchBtn.addEventListener("click", handleSearchClick);
+searchBox.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    handleSearchClick();
+  }
+});
+
+function handleSearchClick() {
+  const cityName = searchBox.value.trim();
+  if (!cityName) {
+    showErrorMessage("Please enter a city name");
+    return;
+  }
+  handleSearch(cityName);
+}
+
+async function handleSearch(cityName) {
   try {
     const weatherData = await getWeatherData(cityName);
-    displayWeather(weatherData);
-    //const dressSuggestion = await getDressSuggestion(weatherData);
-    //displayAISuggestion(dressSuggestion);
-    //console.log("Dress Suggestion:", dressSuggestion);
+
+    updateWeatherDisplay(weatherData);
+
+    fetchAndDisplayAISuggestion(weatherData);
   } catch (error) {
-    console.error("Error fetching weather data:", error);
+    showErrorMessage(error.message);
   }
 }
 
-function displayWeather(weatherData) {
-  console.log("Forecast structure:", weatherData.forecast);
+function updateWeatherDisplay(weatherData) {
   updateCurrentWeatherUI(weatherData.current);
   updateForecastUI(weatherData.forecast);
   updateAlertUI(weatherData.alerts);
   updateLineGraphUI(weatherData.forecast);
 }
-function displayAISuggestion(suggestion) {
-  updateAIResponseUI(suggestion);
-}
-searchBtn.addEventListener("click", () => handleSearch());
 
-// window.addEventListener("DOMContentLoaded", () => {
-//   handleSearch("auto:ip");
-// });
+async function fetchAndDisplayAISuggestion(weatherData) {
+  showLoadingAI();
+  try {
+    const dressSuggestion = await getDressSuggestion(weatherData);
+    updateAIResponseUI(dressSuggestion);
+  } catch (error) {
+    showErrorMessage("Failed to get AI suggestion");
+  } finally {
+    hideLoadingAI();
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  handleSearch("auto:ip");
+});

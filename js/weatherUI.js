@@ -1,5 +1,7 @@
 import Chart from "chart.js/auto";
 
+let lineChart = null;
+
 const city = document.getElementById("city");
 const temp = document.getElementById("temp");
 const humidity = document.getElementById("humidity");
@@ -45,7 +47,11 @@ function updateAIResponseUI(responseText) {
 }
 
 function updateLineGraphUI(forecastData) {
-  new Chart(document.getElementById("linegraph"), {
+  if (lineChart) {
+    lineChart.destroy();
+  }
+
+  lineChart = new Chart(document.getElementById("linegraph"), {
     type: "line",
     options: {
       animation: false,
@@ -91,10 +97,34 @@ function updateLineGraphUI(forecastData) {
   });
 }
 
+function showLoadingAI() {
+  const loadingEl = document.getElementById("loading");
+  if (loadingEl) {
+    loadingEl.style.display = "flex";
+  }
+}
+
+function hideLoadingAI() {
+  const loadingEl = document.getElementById("loading");
+  if (loadingEl) {
+    loadingEl.style.display = "none";
+  }
+}
+
+function showErrorMessage(message) {
+  const alertEl = document.getElementById("alertText");
+  if (alertEl) {
+    alertEl.innerText = `Error: ${message}`;
+  }
+}
+
 export {
   updateCurrentWeatherUI,
   updateForecastUI,
   updateAlertUI,
   updateAIResponseUI,
   updateLineGraphUI,
+  showLoadingAI,
+  hideLoadingAI,
+  showErrorMessage,
 };

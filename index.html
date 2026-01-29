@@ -59,17 +59,20 @@
             <p id="thirdday">day3<span class="forecast-temp">14</span></p>
           </div>
         </div>
-        <div class="card">
-          <!-- <div class="ai">
+        <div class="card ai-card">
+          <div id="loading" style="display: none">
+            <div class="spinner"></div>
+            <span>Loading...</span>
+          </div>
+          <div class="ai">
             <h1>AI</h1>
             <p id="aiForecast">AI-generated forecast will appear here.</p>
-          </div> -->
+          </div>
         </div>
       </div>
       <div style="width: 500px"><canvas id="linegraph"></canvas></div>
     </div>
 
     <script type="module" src="js/main.js"></script>
-    <!-- <script type="module" src="js/lineGraph.js"></script> -->
   </body>
 </html>
