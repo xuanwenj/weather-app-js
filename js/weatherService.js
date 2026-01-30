@@ -7,9 +7,33 @@ async function getWeatherData(cityName) {
 
   try {
     const [current, forecast, alerts] = await Promise.all([
-      fetch(currentUrl).then((res) => res.json()),
-      fetch(forecastUrl).then((res) => res.json()),
-      fetch(alertUrl).then((res) => res.json()),
+      fetch(currentUrl).then((res) => {
+        if (!res.ok) {
+          console.error(
+            `API response status: ${res.status} - ${res.statusText}`,
+          );
+          throw new Error("Failed to fetch current weather data");
+        }
+        return res.json();
+      }),
+      fetch(forecastUrl).then((res) => {
+        if (!res.ok) {
+          console.error(
+            `API response status: ${res.status} - ${res.statusText}`,
+          );
+          throw new Error("Failed to fetch forecast data");
+        }
+        return res.json();
+      }),
+      fetch(alertUrl).then((res) => {
+        if (!res.ok) {
+          console.error(
+            `API response status: ${res.status} - ${res.statusText}`,
+          );
+          throw new Error("Failed to fetch alert data");
+        }
+        return res.json();
+      }),
     ]);
 
     return {
