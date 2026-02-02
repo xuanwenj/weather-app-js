@@ -47,7 +47,9 @@ async function getWeatherData(cityName) {
   }
 }
 function processCurrentData(data) {
-  console.log(data);
+  if (!data || !data.location || !data.current) {
+    throw new Error("Invalid current weather data format");
+  }
   return {
     city: data.location.name || "Unknown Location",
     temp: data.current.temp_c + "°C",
@@ -58,6 +60,9 @@ function processCurrentData(data) {
 }
 
 function processForecastData(data) {
+  if (!data || !data.forecast || !data.forecast.forecastday) {
+    throw new Error("Invalid forecast data format");
+  }
   return data.forecast.forecastday.map((day) => ({
     date: day.date,
     maxTemp: day.day.maxtemp_c + "°C",
@@ -67,6 +72,9 @@ function processForecastData(data) {
 }
 
 function processAlertData(data) {
+  if (!data || !data.alerts) {
+    throw new Error("Invalid alert data format");
+  }
   if (data.alerts && data.alerts.alert && Array.isArray(data.alerts.alert)) {
     return data.alerts.alert.map((alert) => ({
       headline: alert.headline,
