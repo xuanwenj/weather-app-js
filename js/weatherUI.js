@@ -3,7 +3,7 @@ import { getElementById } from "./helper/elementCheck.js";
 
 let lineChart = null;
 
-let city, temp, humidity, wind, weatherIcon, alertText, aiResponse;
+let city, temp, humidity, wind, weatherIcon, alertText, aiResponse, dayTemp;
 
 try {
   city = getElementById("city");
@@ -14,6 +14,7 @@ try {
   weatherIcon = getElementById("weatherIcon");
   alertText = getElementById("alertText");
   aiResponse = getElementById("aiForecast");
+  dayTemp = getElementById("dayTempText");
 } catch (error) {
   console.error("Failed to initialize UI elements:", error);
   alert("UI initialization failed: " + error.message);
@@ -21,7 +22,7 @@ try {
 
 function updateCurrentWeatherUI(currentData) {
   try {
-    if (!city || !temp || !humidity || !wind || !weatherIcon) {
+    if (!city || !temp || !humidity || !wind || !weatherIcon || !dayTemp) {
       showErrorMessage("Unable to display weather: UI elements missing");
       return;
     }
@@ -128,7 +129,18 @@ function updateLineGraphUI(forecastData) {
     });
   } catch (error) {
     console.error("Error updating line graph:", error);
+    displayDayTempText(forecastData);
   }
+}
+
+function displayDayTempText(forecastData) {
+  if (!dayTemp) return;
+  dayTemp.innerHTML = "";
+  const hourlyData = forecastData[0].hourlyTemp
+    .map((h) => `${h.time}: ${h.temp}°C`)
+    .join(" | ");
+  dayTemp.innerHTML = `<strong>Hourly Forecast:</strong><br>${hourlyData}`;
+  dayTemp.style.display = "block";
 }
 
 function showLoadingAI() {
