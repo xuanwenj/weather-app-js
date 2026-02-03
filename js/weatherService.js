@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from "./helper/fetchWithTimeout.js";
 const apiKey = "f2fcbc61efe54e4a89341954260901";
 
 async function getWeatherData(cityName) {
@@ -7,7 +8,7 @@ async function getWeatherData(cityName) {
 
   try {
     const [current, forecast, alerts] = await Promise.all([
-      fetch(currentUrl).then((res) => {
+      fetchWithTimeout(currentUrl, { timeout: 10000 }).then((res) => {
         if (!res.ok) {
           console.error(
             `API response status: ${res.status} - ${res.statusText}`,
@@ -16,7 +17,7 @@ async function getWeatherData(cityName) {
         }
         return res.json();
       }),
-      fetch(forecastUrl).then((res) => {
+      fetchWithTimeout(forecastUrl, { timeout: 10000 }).then((res) => {
         if (!res.ok) {
           console.error(
             `API response status: ${res.status} - ${res.statusText}`,
@@ -25,7 +26,7 @@ async function getWeatherData(cityName) {
         }
         return res.json();
       }),
-      fetch(alertUrl).then((res) => {
+      fetchWithTimeout(alertUrl, { timeout: 10000 }).then((res) => {
         if (!res.ok) {
           console.error(
             `API response status: ${res.status} - ${res.statusText}`,

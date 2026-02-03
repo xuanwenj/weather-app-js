@@ -1,10 +1,15 @@
+import { fetchWithTimeout } from "./helper/fetchWithTimeout.js";
 async function getDressSuggestion(weatherData) {
   try {
-    const response = await fetch("http://localhost:3001/api/dress-suggestion", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ weatherData }),
-    });
+    const response = await fetchWithTimeout(
+      "http://localhost:3001/api/dress-suggestion",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ weatherData }),
+        timeout: 10000,
+      },
+    );
 
     if (!response.ok) {
       throw new Error("Failed to get dress suggestion");
