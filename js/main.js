@@ -50,6 +50,15 @@ function updateWeatherDisplay(weatherData) {
 }
 
 async function fetchAndDisplayAISuggestion(weatherData) {
+  const claudeEnabled = import.meta.env.VITE_ENABLE_CLAUDE === "true";
+
+  if (!claudeEnabled) {
+    updateAIResponseUI(
+      "AI clothing suggestion feature is disabled in this version.",
+    );
+    return;
+  }
+
   showLoadingAI();
   try {
     const dressSuggestion = await getDressSuggestion(weatherData);
