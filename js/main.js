@@ -51,6 +51,8 @@ function updateWeatherDisplay(weatherData) {
 
 async function fetchAndDisplayAISuggestion(weatherData) {
   const claudeEnabled = import.meta.env.VITE_ENABLE_CLAUDE === "true";
+  console.log("VITE_ENABLE_CLAUDE:", import.meta.env.VITE_ENABLE_CLAUDE);
+  console.log("claudeEnabled:", claudeEnabled);
 
   if (!claudeEnabled) {
     updateAIResponseUI(

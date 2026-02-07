@@ -7,7 +7,7 @@ async function getDressSuggestion(weatherData) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ weatherData }),
-        timeout: 10000,
+        timeout: 30000,
       },
     );
 

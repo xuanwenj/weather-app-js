@@ -18,6 +18,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create production .env
+        run: echo "VITE_ENABLE_CLAUDE=false" > .env
+
       - name: Build
         run: npm run build
 
